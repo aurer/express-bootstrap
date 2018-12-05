@@ -3,17 +3,19 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "git@bitbucket.org:aurer/noonode.git",
-  "author": "Phil Maurer <philmau@gmail.com>",
+  "author": "Phil Maurer",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "dependencies": {
-    "browser-sync": "^2.26.3",
     "express": "^4.16.4",
+    "medium-editor": "^5.23.3",
+    "pug": "^2.0.3"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.3",
     "gulp": "^3.9.1",
     "gulp-plumber": "^1.2.1",
     "gulp-sass": "^4.0.2",
-    "gulp-uglify": "^3.0.1",
-    "medium-editor": "^5.23.3",
-    "pug": "^2.0.3"
+    "gulp-uglify": "^3.0.1"
   }
 }

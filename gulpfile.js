@@ -10,14 +10,14 @@ const dist = './public';
 
 // Compile scss
 gulp.task('scss', function() {
-	gulp.src([`${src}/scss/app.scss`])
+	gulp.src([`${src}/scss/main.scss`])
 		.pipe(plumber())
 		.pipe(scss())
 		.pipe(gulp.dest(`${dist}/css`))
 		.pipe(server.stream());
 });
 
-// Compile javascrip
+// Compile javascript
 gulp.task('js', function() {
 	gulp.src([`${src}/js/main.js`])
 		.pipe(plumber())
@@ -37,5 +37,5 @@ gulp.task('serve', function() {
 	gulp.watch(`${src}/scss/**/*.scss`, ['scss']);
 });
 
-gulp.task('default', ['scss', 'bookmarklets']);
+gulp.task('default', ['scss', 'js']);
 gulp.task('dev', ['default', 'serve']);
