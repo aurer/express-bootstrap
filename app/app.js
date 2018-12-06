@@ -18,11 +18,16 @@ app.use((req, res, next) => {
 
 // Error handler
 app.use((err, req, res, next) => {
+	err.status = err.status || 500;
 	console.error(err.stack);
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
-	res.status(err.status || 500);
-	res.render('error')
+	
+	res.status(err.status);
+	res.render('error-'+ err.status, (err, html) => {
+		if (err) return res.render('error');
+		res.send(html);
+	})
 });
 
 module.exports = app;
