@@ -6,6 +6,9 @@
   "author": "Phil Maurer",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "postinstall": "cp config.json.example config.json"
+  },
   "dependencies": {
     "express": "^4.16.4",
     "medium-editor": "^5.23.3",
