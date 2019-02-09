@@ -1,6 +1,6 @@
-const server = require('browser-sync');
 const gulp = require('gulp');
-const scss = require('gulp-sass');
+const server = require('browser-sync');
+const sass = require('gulp-sass');
 const uglify = require('gulp-uglify');
 const plumber = require('gulp-plumber');
 const config = require('./config.json');
@@ -9,33 +9,44 @@ const src = './assets';
 const dist = './public';
 
 // Compile scss
-gulp.task('scss', function() {
-	gulp.src([`${src}/scss/main.scss`])
+function scss(cb) {
+	gulp
+		.src([`${src}/scss/main.scss`])
 		.pipe(plumber())
-		.pipe(scss())
+		.pipe(sass())
 		.pipe(gulp.dest(`${dist}/css`))
 		.pipe(server.stream());
-});
+	cb();
+}
 
 // Compile javascript
-gulp.task('js', function() {
-	gulp.src([`${src}/js/main.js`])
+function js(cb) {
+	gulp
+		.src([`${src}/js/main.js`])
 		.pipe(plumber())
 		.pipe(uglify())
 		.pipe(gulp.dest(`${dist}/js`))
 		.pipe(server.stream());
-});
+	cb();
+}
 
 // Setup local server with injection
-gulp.task('serve', function() {
+function serve(cb) {
 	server.init({
 		proxy: 'localhost:' + config.port,
 		notify: false
 	});
 
-	gulp.watch(`${src}/js/**/*.js`, ['js']);
-	gulp.watch(`${src}/scss/**/*.scss`, ['scss']);
-});
+	gulp.watch(`${src}/js/**/*.js`, js);
+	gulp.watch(`${src}/scss/**/*.scss`, scss);
 
-gulp.task('default', ['scss', 'js']);
-gulp.task('dev', ['default', 'serve']);
+	cb();
+}
+
+function compileAssets(cb) {
+	gulp.parallel(scss, js);
+	cb();
+}
+
+exports.default = gulp.parallel(compileAssets);
+exports.start = gulp.parallel(compileAssets, serve);

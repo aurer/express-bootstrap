@@ -8,6 +8,9 @@ const routes = require('./routes');
 app.set('view engine', 'pug');
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
+// Parse request body
+app.use(express.urlencoded());
+
 // Add routes
 app.use(routes);
 
@@ -22,12 +25,12 @@ app.use((err, req, res, next) => {
 	console.error(err.stack);
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
-	
+
 	res.status(err.status);
-	res.render('error-'+ err.status, (err, html) => {
+	res.render('error-' + err.status, (err, html) => {
 		if (err) return res.render('error');
 		res.send(html);
-	})
+	});
 });
 
 module.exports = app;

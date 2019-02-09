@@ -1,22 +1,23 @@
 {
-  "name": "noonode",
-  "version": "1.0.0",
+  "name": "express-bootstrap",
+  "version": "0.1.0",
   "main": "index.js",
-  "repository": "git@bitbucket.org:aurer/noonode.git",
+  "repository": "git@bitbucket.org:aurer/express-bootstrap.git",
   "author": "Phil Maurer",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "postinstall": "cp config.json.example config.json"
+    "start": "concurrently --kill-others \"nodemon index.js\" \"gulp start\"",
+    "postinstall": "test -f config.json || (yarn init && cp config.json.example config.json)"
   },
   "dependencies": {
+    "concurrently": "^4.1.0",
     "express": "^4.16.4",
-    "medium-editor": "^5.23.3",
     "pug": "^2.0.3"
   },
   "devDependencies": {
     "browser-sync": "^2.26.3",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-plumber": "^1.2.1",
     "gulp-sass": "^4.0.2",
     "gulp-uglify": "^3.0.1"
