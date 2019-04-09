@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const createError = require('http-errors');
 const app = express();
-const routes = require('./routes');
+const routes = require('./routes/index');
 
 // Set app defaults
 app.set('view engine', 'pug');
@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 // Error handler
 app.use((err, req, res, next) => {
 	err.status = err.status || 500;
-	console.error(err.stack);
+	console.error(req.path, err.stack);
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
 

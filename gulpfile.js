@@ -48,5 +48,7 @@ function compileAssets(cb) {
 	cb();
 }
 
+exports.scss = scss;
+exports.js = js;
 exports.default = gulp.parallel(compileAssets);
 exports.start = gulp.parallel(compileAssets, serve);
