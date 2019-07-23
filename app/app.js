@@ -6,10 +6,11 @@ const routes = require('./routes/index');
 
 // Set app defaults
 app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, '..', 'views'));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 // Parse request body
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 
 // Add routes
 app.use(routes);
@@ -22,6 +23,9 @@ app.use((req, res, next) => {
 // Error handler
 app.use((err, req, res, next) => {
 	err.status = err.status || 500;
+	if (req.path.match(/favicon\.ico/)) {
+		return;
+	}
 	console.error(req.path, err.stack);
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
